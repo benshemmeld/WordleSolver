@@ -12,7 +12,7 @@ namespace WordleSolver
             Console.WriteLine($"{WordList.Count} words");
             List<string> possibleWords = WordList;
 
-            while (true)
+            while (possibleWords.Count > 1)
             {
                 Console.WriteLine("Green letters:");
                 var knownPositions = Console.ReadLine();
