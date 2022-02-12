@@ -4,17 +4,17 @@ namespace WordleSolver
 {
     internal class Program
     {
-        private static List<string> wordList = new();
+        private static readonly List<string> WordList = new();
 
         static void Main(string[] args)
         {
             LoadWords();
-            Console.WriteLine($"{wordList.Count} words");
-            List<string> possibleWords = wordList;
+            Console.WriteLine($"{WordList.Count} words");
+            List<string> possibleWords = WordList;
 
             while (true)
             {
-                Console.WriteLine("Enter letters in known positions:");
+                Console.WriteLine("Green letters:");
                 var knownPositions = Console.ReadLine();
 
                 int index = 0;
@@ -30,20 +30,32 @@ namespace WordleSolver
                     index++;
                 }
 
-                Console.WriteLine("Enter letters in unknown position:");
+                Console.WriteLine("Gold letters:");
                 var unknownPositions = Console.ReadLine();
+
+                index = 0;
                 foreach (var unknownPositionChar in unknownPositions)
                 {
                     var c = char.ToLower(unknownPositionChar);
-                    possibleWords = possibleWords.Where(x => x.Contains(c)).ToList();
+                    if (c != '*')
+                    {
+                        possibleWords = possibleWords.Where(x => x.Contains(c))
+                            .Where(x => x[index] != c)
+                            .ToList();
+                    }
+
+                    index++;
                 }
 
-                Console.WriteLine("Enter letters NOT in the word:");
+                Console.WriteLine("Grey letters");
                 var notInWordCharacters = Console.ReadLine();
                 foreach (var notInWordCharacter in notInWordCharacters)
                 {
                     var c = char.ToLower(notInWordCharacter);
-                    possibleWords = possibleWords.Where(x => !x.Contains(c)).ToList();
+                    if (c != '*')
+                    {
+                        possibleWords = possibleWords.Where(x => !x.Contains(c)).ToList();
+                    }
                 }
 
                 Console.WriteLine();
