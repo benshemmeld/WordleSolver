@@ -24,7 +24,6 @@ namespace WordleSolver
                     if (c != '*')
                     {
                         possibleWords = possibleWords.Where(x => x[index] == c).ToList();
-
                     }
 
                     index++;
@@ -58,14 +57,22 @@ namespace WordleSolver
                     }
                 }
 
-                Console.WriteLine();
-                Console.WriteLine($"{possibleWords.Count} possible words");
-                foreach (var possibleWord in possibleWords)
-                {
-                    Console.WriteLine(possibleWord.ToUpper());
-                }
+                DisplayPossibleWords(possibleWords);
             }
 
+        }
+
+        private static void DisplayPossibleWords(List<string> possibleWords)
+        {
+            if (possibleWords.Count > 100)
+                return;
+
+            Console.WriteLine();
+            Console.WriteLine($"{possibleWords.Count} possible words");
+            foreach (var possibleWord in possibleWords)
+            {
+                Console.WriteLine(possibleWord.ToUpper());
+            }
         }
 
         private static void LoadWords()
@@ -75,7 +82,7 @@ namespace WordleSolver
                 var word = line.Trim().ToLower();
                 if (word.Length == 5)
                 {
-                    wordList.Add(word);
+                    WordList.Add(word);
                 }
             }
         }
